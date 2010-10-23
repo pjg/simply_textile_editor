@@ -1,19 +1,3 @@
-/*
-   textile_editor expects the following markup:
-
-     <p>
-       <label>Description:</label>
-     </p>
-
-     <p>
-       <textarea class="textile_editor"></textarea>
-     </p>
-
-   (basically just a textarea tag inside a p tag)
-
-   The textile_editor will insert the UI buttons in a separate paragraph just above the textarea's paragraph.
-*/
-
 $(document).ready(function() {
 
   // getSelection by Alex Brem (http://github.com/localhost/jquery-fieldselection)
@@ -152,7 +136,7 @@ $(document).ready(function() {
         var textarea = $(this)
 
         // add styling buttons
-        var paragraph = $('<p class="textile_editor_buttons"></p>')
+        var span = $('<span class="textile_editor_buttons"></span>')
 
         var bold = $('<input type="button" value="B" />')
         bold.css('font-weight', 'bold')
@@ -189,9 +173,10 @@ $(document).ready(function() {
         var blockquote = $('<input type="button" value="”" />')
         blockquote.click(function() { textarea.textileEditorApplyStyle('bq') })
 
-        paragraph.append(bold, italic, underline, deleted, link, h1, h2, h3, blockquote)
+        span.append(bold, italic, underline, deleted, link, h1, h2, h3, blockquote)
 
-        $(this).parent().before(paragraph)
+        // will insert a <span> with all of the editor's buttons just above the textarea
+        textarea.before(span)
 
         // add keyboard mappings
         textarea.keydown(function(e) {
