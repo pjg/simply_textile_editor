@@ -140,38 +140,39 @@ $(document).ready(function() {
         var span = $('<span class="textile_editor_buttons"></span>')
 
         var bold = $('<input type="button" value="b" />')
-        bold.css('font-weight', 'bold')
+        bold.addClass('bold')
         bold.click(function() { textarea.textileEditorApplyStyle('bold') })
 
         var italic = $('<input type="button" value="i" />')
-        italic.css('font-style', 'italic')
+        italic.addClass('italic')
         italic.click(function() { textarea.textileEditorApplyStyle('italic') })
 
         var link = $('<input type="button" value="link" />')
-        link.css('color', '#00a').css('text-decoration', 'ins')
+        link.addClass('link')
         link.click(function() { textarea.textileEditorApplyStyle('link') })
 
         var h1 = $('<input type="button" value="h1" />')
-        h1.css('font-weight', 'bold')
+        h1.addClass('header')
         h1.click(function() { textarea.textileEditorApplyStyle('h1') })
 
         var h2 = $('<input type="button" value="h2" />')
-        h2.css('font-weight', 'bold')
+        h2.addClass('header')
         h2.click(function() { textarea.textileEditorApplyStyle('h2') })
 
         var h3 = $('<input type="button" value="h3" />')
-        h3.css('font-weight', 'bold')
+        h3.addClass('header')
         h3.click(function() { textarea.textileEditorApplyStyle('h3') })
 
         var bq = $('<input type="button" value="”" />')
+        bq.addClass('bq')
         bq.click(function() { textarea.textileEditorApplyStyle('bq') })
 
         var del = $('<input type="button" value="del" />')
-        del.css('text-decoration', 'line-through')
+        del.addClass('del')
         del.click(function() { textarea.textileEditorApplyStyle('del') })
 
         var ins = $('<input type="button" value="ins" />')
-        ins.css('text-decoration', 'underline')
+        ins.addClass('ins')
         ins.click(function() { textarea.textileEditorApplyStyle('ins') })
 
         span.append(bold, italic, link, h1, h2, h3, bq, del, ins)

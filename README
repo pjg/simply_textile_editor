@@ -38,15 +38,15 @@ Enabling the textile editor will produce the following markup:
     <label>Description:</label>
 
     <span class="textile_editor_buttons">
-      <input type="button" value="B" style="font-weight: bold;" />
-      <input type="button" value="I" style="font-style: italic;" />
-      <input type="button" value="U" style="text-decoration: underline;" />
-      <input type="button" value="D" style="text-decoration: line-through;" />
-      <input type="button" value="link" style="color: #00a; text-decoration: underline;" />
-      <input type="button" value="h1" style="font-weight: bold;" />
-      <input type="button" value="h2" style="font-weight: bold;" />
-      <input type="button" value="h3" style="font-weight: bold;" />
-      <input type="button" value="”" />
+      <input type="button" value="b" class="bold">
+      <input type="button" value="i" class="italic">
+      <input type="button" value="link" class="link">
+      <input type="button" value="h1" class="header">
+      <input type="button" value="h2" class="header">
+      <input type="button" value="h3" class="header">
+      <input type="button" value="”" class="bq">
+      <input type="button" value="del" class="del">
+      <input type="button" value="ins" class="ins">
     </span>
 
     <textarea class="textile_editor"></textarea>
