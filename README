@@ -17,6 +17,32 @@ The following line must be placed after the jquery inclusion. The 'defer' attrib
 
 
 
+Basic styling
+=============
+
+.textile_editor_buttons {
+    display: block;
+    margin: 0.2em 0;
+}
+
+.textile_editor_buttons input {
+    padding: 0.3em 0.6em;
+}
+
+.textile_editor_buttons .bold, .textile_editor_buttons .header, .textile_editor_buttons .bq {
+    font-weight: bold;
+}
+
+.textile_editor_buttons .italic {
+    font-style: italic;
+}
+
+.textile_editor_buttons .link {
+    color: #00a;
+}
+
+
+
 Usage
 =====
 
