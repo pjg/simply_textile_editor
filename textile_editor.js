@@ -87,13 +87,13 @@ $(document).ready(function() {
         case 'bold':
           textarea.replaceSelection(prefix + '*' + text + '*' + suffix)
           break
-        case 'deleted':
-          textarea.replaceSelection(prefix + '-' + text + '-' + suffix)
-          break
         case 'italic':
           textarea.replaceSelection(prefix + '_' + text + '_' + suffix)
           break
-        case 'underline':
+        case 'del':
+          textarea.replaceSelection(prefix + '-' + text + '-' + suffix)
+          break
+        case 'ins':
           textarea.replaceSelection(prefix + '+' + text + '+' + suffix)
           break
       }
@@ -113,6 +113,7 @@ $(document).ready(function() {
       case 'h1':
       case 'h2':
       case 'h3':
+      case 'bq':
         if (text.length > 0) {
           textarea.replaceSelection(style + ". " + text + "\n\n")
         } else {
@@ -138,24 +139,16 @@ $(document).ready(function() {
         // add styling buttons
         var span = $('<span class="textile_editor_buttons"></span>')
 
-        var bold = $('<input type="button" value="B" />')
+        var bold = $('<input type="button" value="b" />')
         bold.css('font-weight', 'bold')
         bold.click(function() { textarea.textileEditorApplyStyle('bold') })
 
-        var italic = $('<input type="button" value="I" />')
+        var italic = $('<input type="button" value="i" />')
         italic.css('font-style', 'italic')
         italic.click(function() { textarea.textileEditorApplyStyle('italic') })
 
-        var underline = $('<input type="button" value="U" />')
-        underline.css('text-decoration', 'underline')
-        underline.click(function() { textarea.textileEditorApplyStyle('underline') })
-
-        var deleted = $('<input type="button" value="D" />')
-        deleted.css('text-decoration', 'line-through')
-        deleted.click(function() { textarea.textileEditorApplyStyle('deleted') })
-
         var link = $('<input type="button" value="link" />')
-        link.css('color', '#00a').css('text-decoration', 'underline')
+        link.css('color', '#00a').css('text-decoration', 'ins')
         link.click(function() { textarea.textileEditorApplyStyle('link') })
 
         var h1 = $('<input type="button" value="h1" />')
@@ -170,10 +163,18 @@ $(document).ready(function() {
         h3.css('font-weight', 'bold')
         h3.click(function() { textarea.textileEditorApplyStyle('h3') })
 
-        var blockquote = $('<input type="button" value="”" />')
-        blockquote.click(function() { textarea.textileEditorApplyStyle('bq') })
+        var bq = $('<input type="button" value="”" />')
+        bq.click(function() { textarea.textileEditorApplyStyle('bq') })
 
-        span.append(bold, italic, underline, deleted, link, h1, h2, h3, blockquote)
+        var del = $('<input type="button" value="del" />')
+        del.css('text-decoration', 'line-through')
+        del.click(function() { textarea.textileEditorApplyStyle('del') })
+
+        var ins = $('<input type="button" value="ins" />')
+        ins.css('text-decoration', 'underline')
+        ins.click(function() { textarea.textileEditorApplyStyle('ins') })
+
+        span.append(bold, italic, link, h1, h2, h3, bq, del, ins)
 
         // will insert a <span> with all of the editor's buttons just above the textarea
         textarea.before(span)
@@ -188,10 +189,10 @@ $(document).ready(function() {
               case 73: textarea.textileEditorApplyStyle('italic') // CTRL + I
                        e.preventDefault()
                        break
-              case 68: textarea.textileEditorApplyStyle('deleted') // CTRL + D
+              case 68: textarea.textileEditorApplyStyle('del') // CTRL + D
                        e.preventDefault()
                        break
-              case 85: textarea.textileEditorApplyStyle('underline') // CTRL + U
+              case 85: textarea.textileEditorApplyStyle('ins') // CTRL + U
                        e.preventDefault()
                        break
               case 76: textarea.textileEditorApplyStyle('link') // CTRL + L
