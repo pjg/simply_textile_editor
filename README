@@ -1,7 +1,8 @@
 textile_editor
 ==============
 
-Simple textarea enhancement with textile syntax. Only one js file required.
+Simple textarea enhancement which adds several buttons applying textile syntax to the selected text.
+All in one javascript file inclusion.
 
 Requires jQuery version 1.4+
 
@@ -50,7 +51,7 @@ Enabling the textile editor will produce the following markup:
     <input type="button" value="h3" style="font-weight: bold;" />
     <input type="button" value="”" />
   </p>
-  
+
   <p>
     <textarea class="textile_editor"></textarea>
   </p>
