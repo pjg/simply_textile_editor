@@ -1,0 +1,69 @@
+textile_editor
+==============
+
+Simple textarea enhancement with textile syntax. Only one js file required.
+
+Requires jQuery version 1.4+
+
+
+
+Installation
+============
+
+The following line must be placed after the jquery inclusion. The 'defer' attribute is not required.
+
+<%= javascript_include_tag 'textile_editor', :defer => 'defer' %>
+
+
+
+Usage
+=====
+
+Add class "textile_editor" to any textarea that you would like to have the editor enabled on.
+
+
+Given the following markup:
+
+  <p>
+    <label>Description:</label>
+  </p>
+
+  <p>
+    <textarea class="textile_editor"></textarea>
+  </p>
+
+
+Enabling the textile editor will produce the following markup:
+
+  <p>
+    <label>Description:</label>
+  </p>
+
+  <p class="textile_editor_buttons">
+    <input type="button" value="B" style="font-weight: bold;" />
+    <input type="button" value="I" style="font-style: italic;" />
+    <input type="button" value="U" style="text-decoration: underline;" />
+    <input type="button" value="D" style="text-decoration: line-through;" />
+    <input type="button" value="link" style="color: #00a; text-decoration: underline;" />
+    <input type="button" value="h1" style="font-weight: bold;" />
+    <input type="button" value="h2" style="font-weight: bold;" />
+    <input type="button" value="h3" style="font-weight: bold;" />
+    <input type="button" value="”" />
+  </p>
+  
+  <p>
+    <textarea class="textile_editor"></textarea>
+  </p>
+
+
+
+Available keyboard shortcuts:
+
+  CTRL + B - bolded text
+  CTRL + I - italic text
+  CTRL + U - underlined text
+  CTRL + D - stroked text
+  CTRL + L - instert link
+
+
+Copyright (c) 2010 Paweł Gościcki, released under the MIT license
