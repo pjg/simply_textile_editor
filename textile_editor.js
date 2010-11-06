@@ -110,14 +110,16 @@ $(document).ready(function() {
           }
         }
         break
-      case 'h1':
-      case 'h2':
-      case 'h3':
-      case 'bq':
+      case 'h1.':
+      case 'h2.':
+      case 'h3.':
+      case 'bq.':
+      case '*':
+      case '#':
         if (text.length > 0) {
-          textarea.replaceSelection(style + ". " + text + "\n\n")
+          textarea.replaceSelection(style + " " + text + "\n\n")
         } else {
-          textarea.textileEditorInsertContent(style + ". title\n\n")
+          textarea.textileEditorInsertContent(style + " text\n\n")
         }
         break
     }
@@ -153,19 +155,19 @@ $(document).ready(function() {
 
         var h1 = $('<input type="button" value="h1" />')
         h1.addClass('header')
-        h1.click(function() { textarea.textileEditorApplyStyle('h1') })
+        h1.click(function() { textarea.textileEditorApplyStyle('h1.') })
 
         var h2 = $('<input type="button" value="h2" />')
         h2.addClass('header')
-        h2.click(function() { textarea.textileEditorApplyStyle('h2') })
+        h2.click(function() { textarea.textileEditorApplyStyle('h2.') })
 
         var h3 = $('<input type="button" value="h3" />')
         h3.addClass('header')
-        h3.click(function() { textarea.textileEditorApplyStyle('h3') })
+        h3.click(function() { textarea.textileEditorApplyStyle('h3.') })
 
         var bq = $('<input type="button" value="”" />')
         bq.addClass('bq')
-        bq.click(function() { textarea.textileEditorApplyStyle('bq') })
+        bq.click(function() { textarea.textileEditorApplyStyle('bq.') })
 
         var del = $('<input type="button" value="del" />')
         del.addClass('del')
@@ -175,7 +177,15 @@ $(document).ready(function() {
         ins.addClass('ins')
         ins.click(function() { textarea.textileEditorApplyStyle('ins') })
 
-        span.append(bold, italic, link, h1, h2, h3, bq, del, ins)
+        var ul = $('<input type="button" value="ul" />')
+        ul.addClass('ul')
+        ul.click(function() { textarea.textileEditorApplyStyle('*') })
+
+        var ol = $('<input type="button" value="ol" />')
+        ol.addClass('ol')
+        ol.click(function() { textarea.textileEditorApplyStyle('#') })
+
+        span.append(bold, italic, link, h1, h2, h3, bq, del, ins, ul, ol)
 
         // will insert a <span> with all of the editor's buttons just above the textarea
         textarea.before(span)
