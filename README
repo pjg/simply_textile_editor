@@ -1,24 +1,59 @@
-textile_editor
-==============
+SimplyTextileEditor
+===================
 
-Simple textarea enhancement which adds several buttons applying textile syntax to the selected text.
-All in one javascript file inclusion.
+SimplyTextileEditor is a Rails plugin providing Simple textarea enhancement adding several buttons applying textile syntax to the selected text. Also provides UI controls to insert pictures inside document (with Rails method to automatically fetch all pictures in the pictures/ directory).
 
-Requires jQuery version 1.4+
+
+
+Requirements
+============
+
+Rails version 2.3.*
+jQuery version 1.4+
+
+Dependencies:
+  redcloth_extensions (http://github.com/pjg/redcloth_extensions)
+  RedCloth gem version 4.* (gem install RedCloth)
+
+Works best with:
+  simply_file_upload plugin (http://github.com/pjg/simply_file_upload)
 
 
 
 Installation
 ============
 
-The following line must be placed after the jquery inclusion. The 'defer' attribute is not required.
+git submodule add git://github.com/pjg/simply_textile_editor.git vendor/plugins/simply_textile_editor
+cp vendor/plugins/simply_textile_editor/js/simply_textile_editor.js public/javascripts/
+git add public/javascripts/simply_textile_editor.js
+git commit -m "Add simply_textile_editor plugin as a submodule"
 
-<%= javascript_include_tag 'textile_editor', :defer => 'defer' %>
+routes.rb
+  # list pictures directories and pictures
+  map.list_pictures_directories '/panel/lista-katalogow-ze-zdjeciami', :controller => 'site', :action => 'list_pictures_directories'
+  map.list_pictures '/panel/lista-zdjec', :controller => 'site', :action => 'list_pictures'
+
+application.html
+  <%= javascript_include_tag 'textile_editor', :defer => 'defer' %>
+  # defer attribute is, of course, optional
+
+site_controller.rb
+  before_filter :editor_role_required, :only => [:list_pictures_directories, :list_pictures]
+
+  def list_pictures_directories
+    # simply_textile_editor plugin
+    process_pictures_directories_listing
+  end
+
+  def list_pictures
+    # simply_textile_editor plugin
+    process_pictures_listing
+  end
 
 
+Optionally add the following CSS styles:
 
-Basic styling
-=============
+/* LAYOUT */
 
 .textile_editor_buttons {
     display: block;
@@ -29,6 +64,76 @@ Basic styling
     padding: 0.3em 0.6em;
 }
 
+.insert_picture_box {
+    display: none;
+    padding: 1.2em 1.5em 1em;
+    position: absolute;
+    width: 23em;
+    z-index: 1;
+}
+
+.insert_picture_box {
+    width: 29em;
+}
+
+.insert_picture_box h2 {
+    margin: 0 0 1em;
+    padding: 0;
+}
+
+.insert_picture_box h2 {
+    margin-bottom: 1.3em;
+}
+
+.insert_picture_box p {
+    margin: 1em 0;
+}
+
+.insert_picture_box p.buttons {
+    margin-bottom: 0;
+}
+
+.insert_picture_box label {
+    display: inline;
+}
+
+.insert_picture_box select {
+    margin-left: 0.2em;
+    width: 21em;
+}
+
+.insert_picture_box input[type="text"] {
+    margin-left: 0.2em;
+}
+
+.insert_picture_box .picture_caption {
+    width: 19.7em;
+}
+
+.insert_picture_box .picture_link {
+    width: 17em;
+}
+
+.insert_picture_box hr {
+    width: 100%;
+}
+
+.insert_picture_box .insert {
+    margin-right: 0.6em;
+}
+
+.insert_picture_box .buttons {
+    margin-top: 1.5em;
+}
+
+.insert_picture_box .loading {
+    margin-left: 0.7em;
+    vertical-align: text-bottom;
+}
+
+
+/* TYPOGRAPHY */
+
 .textile_editor_buttons .bold, .textile_editor_buttons .header, .textile_editor_buttons .bq {
     font-weight: bold;
 }
@@ -37,8 +142,52 @@ Basic styling
     font-style: italic;
 }
 
+.insert_picture_box h2, .insert_picture_box .insert {
+    font-weight: bold;
+}
+
+.insert_picture_box h2 {
+    font-family: Verdana, Arial, sans-serif;
+    line-height: 120%;
+}
+
+.insert_picture_box {
+    font-size: 75%;
+}
+
+.insert_picture_box .picture_sizes em {
+    font-size: 75%;
+    font-style: normal;
+}
+
+
+/* COLORS */
+
 .textile_editor_buttons .link {
     color: #00a;
+}
+
+.insert_picture_box {
+    background: #fffff3;
+    border: 1px solid #ccc;
+}
+
+.insert_picture_box h2 {
+    background: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.insert_picture_box label {
+    cursor: pointer;
+}
+
+.insert_picture_box hr {
+    background-color: #e9eae9;
+    color: #e9eae9;
+}
+
+.insert_picture_box .picture_sizes em {
+    color: #999;
 }
 
 
@@ -46,7 +195,7 @@ Basic styling
 Usage
 =====
 
-Add class "textile_editor" to any textarea that you would like to have the textile editor enabled on.
+Add the class "textile_editor" to any textarea that you would like to have the textile editor enabled on.
 
 
 Given the following markup:
@@ -58,21 +207,24 @@ Given the following markup:
   </p>
 
 
-Enabling the textile editor will produce the following markup:
+By installing the plugin the above will become:
 
   <p>
     <label>Description:</label>
 
     <span class="textile_editor_buttons">
-      <input type="button" value="b" class="bold">
-      <input type="button" value="i" class="italic">
-      <input type="button" value="link" class="link">
-      <input type="button" value="h1" class="header">
-      <input type="button" value="h2" class="header">
-      <input type="button" value="h3" class="header">
-      <input type="button" value="”" class="bq">
-      <input type="button" value="del" class="del">
-      <input type="button" value="ins" class="ins">
+      <input type="button" value="b" class="bold" />
+      <input type="button" value="i" class="italic" />
+      <input type="button" value="link" class="link" />
+      <input type="button" value="h1" class="header" />
+      <input type="button" value="h2" class="header" />
+      <input type="button" value="h3" class="header" />
+      <input type="button" value="”" class="bq" />
+      <input type="button" value="del" class="del" />
+      <input type="button" value="ins" class="ins" />
+      <input type="button" value="ul" class="ul" />
+      <input type="button" value="ol" class="ol" />
+      <input type="button" value="img" class="img" />
     </span>
 
     <textarea class="textile_editor"></textarea>
