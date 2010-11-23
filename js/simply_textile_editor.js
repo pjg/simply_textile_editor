@@ -255,8 +255,17 @@ $(document).ready(function() {
     picture_filename.append($(filenames))
   }
 
+  // function to select a filename in <select> element
+  $.fn.selectFilename = function(filename) {
+    $(this).find('option[value="' + filename + '"]').parent().val(filename)
+  }
+
   // function to fetch pictures for the selected directory
-  $.fn.fetchPictures = function(directory) {
+  $.fn.fetchPictures = function(opts) {
+    // function arguments: first is the directory and the second one [optional] is the filename to select after reloading the list
+    var directory = arguments[0]
+    var filename_to_select = arguments[1]
+
     var picture_filename = $(this)
     if (pictures[directory] == undefined) {
       $.ajax({
@@ -272,11 +281,21 @@ $(document).ready(function() {
           picture_filename.updatePicturesFilenames(directory)
           // show picture filename <select> & hide spinner
           picture_filename.show().parent().find('.loading').remove()
+
+          // select filename if there is one to select
+          if (filename_to_select != undefined) {
+            picture_filename.selectFilename(filename_to_select)
+          }
         }
       })
     } else {
       // populate <select> with pictures filenames
       picture_filename.updatePicturesFilenames(directory)
+
+      // select filename if there is one to select
+      if (filename_to_select != undefined) {
+        picture_filename.selectFilename(filename_to_select)
+      }
     }
   }
 
@@ -440,6 +459,32 @@ $(document).ready(function() {
 
     // close insert picture dialog
     $('.insert_picture_box').slideUp(100)
+  })
+
+  // function to use in conjunction with the simply_file_upload plugin; it's called whenever there is a new picture uploaded and we want to have it automatically selected
+  $.extend({
+    selectNewlyUploadedPicture: function(path) {
+      arr = path.split('/')
+
+      // first element is empty (root directory)
+      arr.shift()
+
+      // select filename and dirname (under public/ without trailing slash) from the path
+      filename = arr.pop()
+      directory = arr.slice($.inArray('public', arr) + 1, arr.length).join('/')
+
+      // update global 'pictures' variable with the newly uploaded picture filename
+      if (pictures[directory] != undefined) {
+        pictures[directory].push(filename)
+      }
+
+      // make the directory with the uploaded picture selected
+      $('#picture_directory').val(directory)
+
+      // update pictures lists for the selected directory and make the uploaded filename selected
+      var picture_filename = $('#picture_filename')
+      picture_filename.fetchPictures(directory, filename)
+    }
   })
 
 })
