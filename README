@@ -34,7 +34,7 @@ routes.rb
   map.list_pictures '/panel/lista-zdjec', :controller => 'site', :action => 'list_pictures'
 
 application.html
-  <%= javascript_include_tag 'textile_editor', :defer => 'defer' %>
+  <%= javascript_include_tag 'simply_textile_editor', :defer => 'defer' %>
   # defer attribute is, of course, optional
 
 site_controller.rb
