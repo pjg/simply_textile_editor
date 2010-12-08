@@ -313,10 +313,10 @@ $(document).ready(function() {
     div.append($('<p><label for="picture_filename">Zdjęcie:</label> <select id="picture_filename"></select></p>'))
 
     // picture alignment
-    div.append($('<p>Wyrównaj:<br /><input type="radio" id="picture_alignleft" name="picture_alignment" value="alignleft" /><label for="picture_alignleft">do lewej</label> <input type="radio" id="picture_centered" name="picture_alignment" checked="checked" value="centered" /><label for="picture_centered">do środka</label> <input type="radio" id="picture_alignright" name="picture_alignment" value="alignright" /><label for="picture_alignright">do prawej</label></p>'))
+    div.append($('<p>Wyrównaj:<br /><label><input type="radio" name="picture_alignment" value="alignleft" />do lewej</label> <label><input type="radio" name="picture_alignment" checked="checked" value="centered" />do środka</label> <label><input type="radio" name="picture_alignment" value="alignright" />do prawej</label></p>'))
 
     // picture size (for right and left aligned pictures) (initially hidden)
-    div.append($('<p class="picture_sizes" style="display: none">Przybliżona wielkość zdjęcia:<br /><input type="radio" id="picture_small" name="picture_size" value="small" /><label for="picture_small">małe <em>(~200px)</em></label> <input type="radio" id="picture_medium" name="picture_size" checked="checked" value="medium" /><label for="picture_medium">średnie <em>(~250px)</em></label> <input type="radio" id="picture_big" name="picture_size" value="big" /><label for="picture_big">duże <em>(~350px)</em></label></p>'))
+    div.append($('<p class="picture_sizes" style="display: none">Przybliżona wielkość zdjęcia:<br /><label><input type="radio" name="picture_size" value="small" />małe <em>(~200px)</em></label> <label><input type="radio" name="picture_size" checked="checked" value="medium" />średnie <em>(~250px)</em></label> <label><input type="radio" name="picture_size" value="big" />duże <em>(~350px)</em></label></p>'))
 
     // spacer
     div.append($('<hr />'))
@@ -409,7 +409,7 @@ $(document).ready(function() {
   // show/hide picture size radio buttons (they are only valid for left and right aligned images)
   $('input[type="radio"][name="picture_alignment"]').change(function() {
     var picture_alignment = $(this).val()
-    var picture_sizes = $(this).parent().parent().find('.picture_sizes')
+    var picture_sizes = $(this).parent().parent().parent().find('.picture_sizes')
 
     if (picture_alignment == 'centered') {
       picture_sizes.hide()
